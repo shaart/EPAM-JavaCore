@@ -40,7 +40,8 @@ public class Main {
 	public static void main(String[] args) {
 		double x1, y1, x2, y2, x3, y3, x4, y4;
 		
-		Scanner scanner = new Scanner(System.in).useLocale(Locale.getDefault());
+		Scanner scanner = new Scanner(System.in);
+		scanner.useLocale(Locale.getDefault());		
 		System.out.println("First Rectangle.. ");
 		x1 = args.length >= 1 ? tryParse(args[0]) : askInputUntilCorrect(scanner, "x1");
 		y1 = args.length >= 2 ? tryParse(args[1]) : askInputUntilCorrect(scanner, "y1");

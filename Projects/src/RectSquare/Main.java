@@ -42,7 +42,9 @@ public class Main {
 		double y1 = 0;
 		double x2 = 0;
 		double y2 = 0;
-		Scanner scanner = new Scanner(System.in).useLocale(Locale.getDefault());
+		
+		Scanner scanner = new Scanner(System.in);
+		scanner.useLocale(Locale.getDefault());
 		x1 = args.length >= 1 ? tryParse(args[0]) : askInputUntilCorrect(scanner, "x1");
 		y1 = args.length >= 2 ? tryParse(args[1]) : askInputUntilCorrect(scanner, "y1");
 		x2 = args.length >= 3 ? tryParse(args[2]) : askInputUntilCorrect(scanner, "x2");
