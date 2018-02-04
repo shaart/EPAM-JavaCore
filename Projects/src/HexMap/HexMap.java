@@ -2,6 +2,7 @@ package HexMap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class HexMap {
@@ -46,6 +47,10 @@ public class HexMap {
 
 	public Set<Hex> getGrid() {
 		return map.keySet();
+	}
+	
+	public Set<Entry<Hex, Object>> getObjects() {
+		return map.entrySet();
 	}
 
 	/**
