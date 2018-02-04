@@ -31,10 +31,18 @@ public class DrawableHex extends Hex implements Drawable {
 	public int getCenterX() {
 		int x = 0;
 		int w = getWidth();
-		if (q % 2 == 0) {
-			x = q/2 * w * 3 / 2;
+		if (isFlat) {
+			if (q % 2 == 0) {
+				x = (w * 3 / 2) * q / 2; // Formula 1
+			} else {
+				x = (w * 3 / 4) * q; // Formula 2
+			}
 		} else {
-			x = (w * 3 / 4) * q;
+			if (r % 2 == 0) {
+				x = q * w; // Formula 3
+			} else {
+				x = w / 2 + q * w; // Formula 4
+			}
 		}
 		return size + x;
 	}
@@ -42,10 +50,18 @@ public class DrawableHex extends Hex implements Drawable {
 	public int getCenterY() {
 		int y = 0;
 		int h = getHeight();
-		if (q % 2 == 0) {
-			y = r * h;
+		if (!isFlat) { // inverted
+			if (r % 2 == 0) {
+				y = (h * 3 / 2) * r / 2; // Formula 1
+			} else {
+				y = (h * 3 / 4) * r; // Formula 2
+			}
 		} else {
-			y = h / 2 + r * h;
+			if (q % 2 == 0) {
+				y = r * h; // Formula 3
+			} else {
+				y = h / 2 + r * h; // Formula 4
+			}
 		}
 		return size + y;
 	}
@@ -59,7 +75,7 @@ public class DrawableHex extends Hex implements Drawable {
 		g.drawPolygon(getPolygon());
 		g.drawString(q + ", " + r, center.x - 10, center.y + 5);
 	}
-	
+
 	private Polygon getPolygon() {
 		Point center = getCenter();
 		int[] xs = new int[SIDES_COUNT];
@@ -70,10 +86,10 @@ public class DrawableHex extends Hex implements Drawable {
 			xs[i] = p.x;
 			ys[i] = p.y;
 		}
-		
+
 		return new Polygon(xs, ys, SIDES_COUNT);
 	}
-	
+
 	public void fill(Graphics g, Color fillColor) {
 		Color c = g.getColor();
 		g.setColor(fillColor);

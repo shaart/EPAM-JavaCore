@@ -30,6 +30,14 @@ public class HexMapPanel extends JPanel {
 		map.setObject(hex, "dh");
 	}
 
+	public void rotateGrid() {
+		for (Hex h : map.getGrid()) {
+			if (h instanceof DrawableHex) {
+				((DrawableHex) h).rotate();
+			}
+		}
+	}
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -37,7 +45,7 @@ public class HexMapPanel extends JPanel {
 			if (h instanceof DrawableHex) {
 				DrawableHex dh = (DrawableHex) h;
 				Random rand = new Random();
-				dh.fill(g, Color.getHSBColor(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
+				dh.fill(g, Color.getHSBColor(rand.nextFloat(), rand.nextFloat(), 1));
 				dh.draw(g);
 			}
 		}
