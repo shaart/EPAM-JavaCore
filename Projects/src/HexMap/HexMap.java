@@ -1,68 +1,70 @@
 package HexMap;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.Set;
+import java.util.List;
 
-public class HexMap {
-	protected final static String BLANK = "0";
-	protected final static String NO_HEX = "_";
+public class HexMap<T> {
+    protected Map<Hex, T> map = new HashMap<>();
 
-	protected Map<Hex, Object> map = new HashMap<Hex, Object>();
+    public HexMap() {
+    }
 
-	public HexMap() {
-	}
+    public boolean setObject(int column, int row, T object) {
+        return setObject(new Hex(column, row), object, false);
+    }
 
-	public void setObject(Hex h, Object o) {
-		if (!map.containsKey(h) || BLANK.equals(map.get(h))) {
-			map.put(h, o);
-		}
-	}
+    public boolean setObject(Hex coordsHex, T object) {
+        return setObject(coordsHex, object, false);
+    }
 
-	public void removeObject(Hex h) {
-		if (map.containsKey(h)) {
-			map.put(h, BLANK);
-		}
-	}
+    public boolean setObject(Hex coordsHex, T object, boolean canOverride) {
+        if (map.containsKey(coordsHex) && (canOverride || map.get(coordsHex) == null)) {
+            map.put(coordsHex, object);
+            return true;
+        }
+        return false;
+    }
 
-	public void removeHex(Hex h) {
-		map.put(h, NO_HEX);
-	}
+    public void removeObjectAt(Hex coordsHex) {
+        if (map.containsKey(coordsHex)) {
+            map.put(coordsHex, null);
+        }
+    }
 
-	public void setObject(int q, int r, Object o) {
-		setObject(new Hex(q, r), o);
-	}
+    public void removeHex(Hex coords) {
+        map.remove(coords);
+    }
 
-	/**
-	 * Get object from HexMap by Hex
-	 * 
-	 * @param h
-	 *            Hex
-	 * @return Object located at column <b>q</b> a row <b>r</b>
-	 */
-	public Object getObject(Hex h) {
-		return map.get(h);
-	}
+    /**
+     * Get object from HexMap by Hex
+     *
+     * @param coordsHex Hex
+     * @return Object located at column <b>q</b> a row <b>r</b>
+     */
+    public T getObject(Hex coordsHex) {
+        return map.get(coordsHex);
+    }
 
-	public Set<Hex> getGrid() {
-		return map.keySet();
-	}
-	
-	public Set<Entry<Hex, Object>> getObjects() {
-		return map.entrySet();
-	}
+    /**
+     * Get object from HexMap by Hex's coordinates
+     *
+     * @param column Column
+     * @param row    Row
+     */
+    public T getObject(int column, int row) {
+        return getObject(new Hex(column, row));
+    }
 
-	/**
-	 * Get object from HexMap by Hex's coordinates
-	 * 
-	 * @param q
-	 *            Column
-	 * @param r
-	 *            Row
-	 */
-	public Object getObject(int q, int r) {
-		return getObject(new Hex(q, r));
-	}
+    public Collection<T> getObjects() {
+        return map.values();
+    }
+
+    public Set<Hex> getHexGrid() {
+        return map.keySet();
+    }
+
 
 }
