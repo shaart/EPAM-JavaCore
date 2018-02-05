@@ -14,6 +14,31 @@ public class HexMap<T> {
     public HexMap() {
     }
 
+    public static <T> HexMap<T> initializeBlank(int width, int height) {
+        HexMap<T> resultMap = new HexMap<T>();
+        for (int column = 0; column < width; column++) {
+            for (int row = 0; row < height; row++) {
+                resultMap.createHex(new Hex(column, row));
+            }
+        }
+
+        return resultMap;
+    }
+
+    public static <T> HexMap<T> initializeWith(int width, int height, T initObject) {
+        HexMap<T> resultMap = new HexMap<T>();
+        Hex current;
+        for (int column = 0; column < width; column++) {
+            for (int row = 0; row < height; row++) {
+                current = new Hex(column, row);
+                resultMap.createHex(current);
+                resultMap.setObject(current, initObject);
+            }
+        }
+
+        return resultMap;
+    }
+
     public boolean setObject(int column, int row, T object) {
         return setObject(new Hex(column, row), object, false);
     }
