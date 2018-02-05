@@ -1,5 +1,7 @@
 package HexMap;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
@@ -66,5 +68,25 @@ public class HexMap<T> {
         return map.keySet();
     }
 
+    public int distance(Hex start, Hex destination) {
+        throw new UnsupportedOperationException();
+    }
+
+    public List<Hex> path(Hex start, Hex destination) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean save(FileOutputStream savingFile) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Loads HexMap from file
+     *
+     * @return operation result
+     */
+    public boolean load(FileInputStream loadingFile) {
+        throw new UnsupportedOperationException();
+    }
 
 }
