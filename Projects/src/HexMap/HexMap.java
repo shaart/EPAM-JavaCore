@@ -36,6 +36,21 @@ public class HexMap<T> {
         }
     }
 
+    public void createHex(int column, int row) {
+        createHex(new Hex(column, row));
+    }
+
+    public void createHex(Hex hex) {
+        map.put(hex, null);
+    }
+
+    public void createHexWith(int column, int row, T object) {
+        createHexWith(new Hex(column, row), object);
+    }
+    public void createHexWith(Hex hex, T object) {
+        map.put(hex, object);
+    }
+
     public void removeHex(Hex coords) {
         map.remove(coords);
     }
