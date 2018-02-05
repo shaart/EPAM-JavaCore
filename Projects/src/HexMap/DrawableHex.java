@@ -12,6 +12,8 @@ public class DrawableHex extends Hex implements Drawable {
     private int size = 30;
     private boolean isFlatTopped = true;
 
+    private Color borderColor;
+    private Color fillColor;
 
     public DrawableHex() {
         this(0, 0, true, Color.white, Color.black);
@@ -42,6 +44,22 @@ public class DrawableHex extends Hex implements Drawable {
         this.isFlatTopped = isFlatTopped;
         this.fillColor = fillColor;
         this.borderColor = borderColor;
+    }
+
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
     }
 
     public void setSize(int newSize) {
@@ -84,8 +102,16 @@ public class DrawableHex extends Hex implements Drawable {
 
     public void draw(Graphics g) {
         Point center = getCenter();
+        fill(g, fillColor);
+
+        Color graphicsColor = g.getColor();
+        g.setColor(borderColor);
         g.drawPolygon(getPolygon());
+        g.setColor(graphicsColor);
+
+        if (drawCoords) {
             g.drawString(q + ", " + r, center.x - 10, center.y + 5);
+        }
     }
 
     private Polygon getPolygon() {
