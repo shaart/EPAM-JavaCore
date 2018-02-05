@@ -68,6 +68,22 @@ public class HexMap<T> {
         return map.keySet();
     }
 
+    public boolean moveObject(T o, Hex from, Hex to) {
+        return moveObject(o, from, to, false);
+    }
+
+    public boolean moveObject(T object, Hex from, Hex to, boolean canOverride) {
+        if (object == null || from == null || to == null) return false;
+        if (map.get(to) != null && !canOverride) return false; // these coords already contains object
+
+        if (object.equals(map.get(from))) {
+            map.put(from, null);
+            map.put(to, object);
+            return true;
+        }
+        return false;
+    }
+
     public int distance(Hex start, Hex destination) {
         throw new UnsupportedOperationException();
     }
