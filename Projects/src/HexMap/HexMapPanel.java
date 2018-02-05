@@ -1,29 +1,18 @@
 package HexMap;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.Random;
+import java.awt.*;
 
 import javax.swing.JPanel;
 
 public class HexMapPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-
-	public HexMapPanel() {
-		this(10, 10);
-	}
-
-
-	public void rotateGrid() {
-		for (Hex h : map.getGrid()) {
-			if (h instanceof DrawableHex) {
-				((DrawableHex) h).rotate();
-			}
-		}
-	}
-
+    private static final long serialVersionUID = 1L;
     public boolean drawHexGrid = true;
     HexMap<Drawable> map = new HexMap<Drawable>();
+
+    public HexMapPanel() {
+        this(10, 10);
+    }
+
     public HexMapPanel(int width, int height) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -43,6 +32,15 @@ public class HexMapPanel extends JPanel {
     public void add(Hex coords, Drawable object) {
         map.setObject(coords, object, true);
     }
+
+    public void rotateGrid() {
+        for (Hex h : map.getHexGrid()) {
+            if (h instanceof DrawableHex) {
+                ((DrawableHex) h).rotate();
+            }
+        }
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
