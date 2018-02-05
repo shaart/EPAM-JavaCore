@@ -1,16 +1,9 @@
 package HexMap;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JWindow;
 
 class AppWindow extends JWindow {
@@ -24,7 +17,7 @@ class AppWindow extends JWindow {
 		initGUI(400, 400, "HexMap");
 	}
 
-	public void show() {
+	public void showFrame() {
 		mainFrame.setVisible(true);
 	}
 
@@ -50,6 +43,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		AppWindow window = new AppWindow();
-		window.show();
+		window.showFrame();
 	}
 }
