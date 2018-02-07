@@ -1,5 +1,6 @@
 package HexMap;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Collection;
@@ -58,6 +59,14 @@ public class HexMap<T> {
     public void removeObjectAt(Hex coordsHex) {
         if (map.containsKey(coordsHex)) {
             map.put(coordsHex, null);
+        }
+    }
+
+    public void removeObject(T object) {
+        if (object == null) return;
+
+        if (map.containsValue(object)) {
+            map.values().remove(object);
         }
     }
 
