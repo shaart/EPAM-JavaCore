@@ -1,7 +1,8 @@
 package RectIntersectionSquare;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
-import static junit.framework.Assert.*;
 
 public class RectangleTest {
 
