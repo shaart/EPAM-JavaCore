@@ -1,8 +1,9 @@
 package RectIntersectionSquare;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class PointTest {
 
