@@ -1,0 +1,261 @@
+B b = new B();
+>>>>>>>>>>>> public static void showAll(B var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 2 (Basics.B)
+  protected final static: 2 (Basics.B)
+  public final static: 2 (Basics.B)
+== FINAL ====================================
+  default final: 2 (Basics.B)
+  protected final: 2 (Basics.B)
+  public final: 2 (Basics.B)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+
+A bToA = new B();
+>>>>>>>>>>>> public static void showAll(A var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 1 (Basics.A)
+  protected: 1 (Basics.A)
+  public: 1 (Basics.A)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+
+B cToB = new C();
+>>>>>>>>>>>> public static void showAll(B var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 2 (Basics.B)
+  protected final static: 2 (Basics.B)
+  public final static: 2 (Basics.B)
+== FINAL ====================================
+  default final: 2 (Basics.B)
+  protected final: 2 (Basics.B)
+  public final: 2 (Basics.B)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 3 (Basics.C)
+  protected: 3 (Basics.C)
+  public: 3 (Basics.C)
+
+A cToA = new C();
+>>>>>>>>>>>> public static void showAll(A var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 1 (Basics.A)
+  protected: 1 (Basics.A)
+  public: 1 (Basics.A)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 3 (Basics.C)
+  protected: 3 (Basics.C)
+  public: 3 (Basics.C)
+
+DC dc = new DC();
+>>>>>>>>>>>> public static void showAll(B var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 2 (Basics.B)
+  protected final static: 2 (Basics.B)
+  public final static: 2 (Basics.B)
+== FINAL ====================================
+  default final: 2 (Basics.B)
+  protected final: 2 (Basics.B)
+  public final: 2 (Basics.B)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 3 (Basics.C)
+  protected: 3 (Basics.C)
+  public: 3 (Basics.C)
+
+EB eb = new EB();
+>>>>>>>>>>>> public static void showAll(B var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 2 (Basics.B)
+  protected final static: 2 (Basics.B)
+  public final static: 2 (Basics.B)
+== FINAL ====================================
+  default final: 2 (Basics.B)
+  protected final: 2 (Basics.B)
+  public final: 2 (Basics.B)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 2 (Basics.B)
+  protected static: 2 (Basics.B)
+  public static: 2 (Basics.B)
+== COMMON ===================================
+  default: 2 (Basics.B)
+  protected: 2 (Basics.B)
+  public: 2 (Basics.B)
+
+FA fa = new FA();
+>>>>>>>>>>>> public static void showAll(A var)
+~~ FIELDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 1 (Basics.A)
+  protected: 1 (Basics.A)
+  public: 1 (Basics.A)
+~~ METHODS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== FINAL STATIC =============================
+  default final static: 1 (Basics.A)
+  protected final static: 1 (Basics.A)
+  public final static: 1 (Basics.A)
+== FINAL ====================================
+  default final: 1 (Basics.A)
+  protected final: 1 (Basics.A)
+  public final: 1 (Basics.A)
+== STATIC ===================================
+   default static: 1 (Basics.A)
+  protected static: 1 (Basics.A)
+  public static: 1 (Basics.A)
+== COMMON ===================================
+  default: 1 (Basics.A)
+  protected: 1 (Basics.A)
+  public: 1 (Basics.A)
+
+
+Process finished with exit code 0
