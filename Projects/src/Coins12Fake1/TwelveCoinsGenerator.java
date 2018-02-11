@@ -15,6 +15,8 @@ public class TwelveCoinsGenerator {
     }
 
     private static double getRandom(double min, double max) {
+        if (min > max) throw new IllegalArgumentException("'min' must be less than 'max'");
+
         return min + (max - min) * random.nextDouble();
     }
 
