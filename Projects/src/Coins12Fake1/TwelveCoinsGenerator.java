@@ -67,6 +67,24 @@ public class TwelveCoinsGenerator {
         return generate(isFakeHeavier, getRandom(0, COINS_COUNT - 1));
     }
 
+
+    /**
+     * Generates specified list of 12 coins.<br><br>
+     *
+     * <b>All coins</b> will have <b>default value</b> (from 1 to 10).<br>
+     * <b>Common coins</b> will have <b>default weight</b> (from 1 to 2).<br>
+     * <b>Fake coin</b> will have <b>default weight</b> (the difference with common is greater or less by a value
+     * from 1/4 to 1/2 of common's weight).<br>
+     *
+     * @param fakePosition  Position of fake coin at list
+     * @return list of 12 coins created by specified parameters
+     */
+    public static List<Coin> generate(int fakePosition) {
+        return generate(random.nextBoolean(), fakePosition);
+    }
+
+
+
     /**
      * Generates specified list of 12 coins.<br><br>
      *
