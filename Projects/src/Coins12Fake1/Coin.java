@@ -33,4 +33,9 @@ public class Coin implements Weighable {
     public double getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Value: %d; Weight: %f", value, weight);
+    }
 }
