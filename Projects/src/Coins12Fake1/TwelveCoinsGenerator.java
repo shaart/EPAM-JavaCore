@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TwelweCoinsGenerator {
+public class TwelveCoinsGenerator {
     public static final int COINS_COUNT = 12;
     private static final Random random = new Random();
 
