@@ -23,45 +23,44 @@ public class FakeSearcher {
         // Make 3 piles of 4 coins
         final List<Coin> left4 = new ArrayList<>();
         final List<Coin> right4 = new ArrayList<>();
-        final List<Coin> remainderRight4 = new ArrayList<>();
+        final List<Coin> remainder4 = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             left4.add(coins12.get(i)); // 1, 2, 3, 4 coins
             right4.add(coins12.get(i + 4)); // 5, 6, 7, 8 coins
-            remainderRight4.add(coins12.get(i + 8)); // 9, 10, 11, 12 coins
+            remainder4.add(coins12.get(i + 8)); // 9, 10, 11, 12 coins
         }
 
         int firstLeft4ToRight4 = BalanceScales.compare(left4, right4);
         if (firstLeft4ToRight4 == 0) {
-            // Take remainderRight4 pile
+            // Take remainder4 pile
             // Make 2 piles of 2 coins
-            List<Coin> left2 = new ArrayList<Coin>() {{
-                add(coins12.get(8));
-                add(coins12.get(9));
+            List<Coin> left3 = new ArrayList<Coin>() {{
+                add(coins12.get(8)); // 9
+                add(coins12.get(9)); // 10
+                add(coins12.get(10)); // 11
             }};
-            List<Coin> right2 = new ArrayList<Coin>() {{
-                add(coins12.get(10));
-                add(coins12.get(11));
-            }};
-
-            List<Coin> common2 = new ArrayList<Coin>() {{
-                add(coins12.get(0));
-                add(coins12.get(1));
+            List<Coin> right3 = new ArrayList<Coin>() {{
+                add(coins12.get(0)); // 1
+                add(coins12.get(1)); // 2
+                add(coins12.get(2)); // 3
             }};
 
-            int secondLeft2ToCommon2 = BalanceScales.compare(left2, common2);
-            if (secondLeft2ToCommon2 == 0) {
-                // Need to compare 1 of remaining 2  with common and make decision
-                int thirdLastTwo = BalanceScales.compare(/*questionable*/ right2.get(0), /*common*/ common2.get(0));
+            int secondLeft3ToCommon3 = BalanceScales.compare(left3, right3);
+            if (secondLeft3ToCommon3 == 0) {
+                // 12 coin is fake
+                int third12ToCommon = BalanceScales.compare(/*questionable*/ coins12.get(11), /*common*/ coins12.get(0));
 
-                fake = thirdLastTwo == 0 ? right2.get(1) : right2.get(0);
+                fake = coins12.get(11); // by value of compare we can say is coin heavy or light
             } else {
-                // Need search in left2
-                int thirdLastTwo = BalanceScales.compare(left2.get(0), left2.get(1));
+                // Compare 9 and 10
+                int thirdLastTwo = BalanceScales.compare(left3.get(0), left3.get(1));
 
-                if (secondLeft2ToCommon2 > 0) {
-                    fake = thirdLastTwo > 0 ? left2.get(0) : left2.get(1);
+                if (thirdLastTwo == 0) {
+                    fake = left3.get(2); // 11
+                } else if (secondLeft3ToCommon3 > 0 && thirdLastTwo > 0 || secondLeft3ToCommon3 < 0 && thirdLastTwo < 0) {
+                    fake = left3.get(0); // 9
                 } else {
-                    fake = thirdLastTwo < 0 ? left2.get(0) : left2.get(1);
+                    fake = left3.get(1); // 10
                 }
             }
         } else {
@@ -85,10 +84,11 @@ public class FakeSearcher {
             int secondLeft3ToRight3 = BalanceScales.compare(left3, right3);
             if (secondLeft3ToRight3 == 0) {
                 // Need search in the remaining two coins: 7 or 8
-                if (BalanceScales.compare(remaining2.get(0), remaining2.get(1)) > 0) {
-                    fake = firstLeft4ToRight4 > 0 ? remaining2.get(1) : remaining2.get(0);
+                int third7To8 = BalanceScales.compare(remaining2.get(0), remaining2.get(1));
+                if (firstLeft4ToRight4 > 0 && third7To8 > 0 || firstLeft4ToRight4 < 0 && third7To8 < 0) {
+                    fake = remaining2.get(1); // 7
                 } else {
-                    fake = firstLeft4ToRight4 > 0 ? remaining2.get(0) : remaining2.get(1);
+                    fake = remaining2.get(0); // 8
                 }
             } else {
                 // Need search in one of these piles
