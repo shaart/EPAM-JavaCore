@@ -21,7 +21,7 @@ public class TwelveCoinsGeneratorTest {
         try {
             Method getRandom = generator.getClass().getDeclaredMethod("getRandom", int.class, int.class);
             getRandom.setAccessible(true);
-            int number = -1;
+            int number;
             int min = 9;
             int max = 10;
             number = (int) getRandom.invoke(generator, min, max);
@@ -60,7 +60,7 @@ public class TwelveCoinsGeneratorTest {
         try {
             Method getRandom = generator.getClass().getDeclaredMethod("getRandom", double.class, double.class);
             getRandom.setAccessible(true);
-            double number = -1.0;
+            double number;
             double min = 9.3;
             double max = 9.9;
             number = (double) getRandom.invoke(generator, min, max);
