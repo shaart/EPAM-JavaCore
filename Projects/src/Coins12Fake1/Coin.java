@@ -36,6 +36,6 @@ public class Coin implements Weighable {
 
     @Override
     public String toString() {
-        return String.format("Value: %d; Weight: %f", value, weight);
+        return String.format("Weight: %f; Value: %d", weight, value);
     }
 }
