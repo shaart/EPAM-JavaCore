@@ -8,15 +8,92 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class TwelveCoinsGeneratorTest {
+
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     private final TwelveCoinsGenerator generator = new TwelveCoinsGenerator();
     private final int ATTEMPTS_TO_GET_RANDOM = 1000;
+    private final int COINS_COUNT = 12;
+    private final int DIFFERENT_WEIGHTS = 2;
+
+    private boolean isGeneratedFakeWeightCorrect(boolean isFakeMustBeHeavier, Map<Double, Integer> differentWeights) {
+        Double fakeWeight = 0.0;
+        Double commonWeight = 0.0;
+        for (Map.Entry<Double, Integer> entry : differentWeights.entrySet()) {
+            Integer weightsCount = entry.getValue();
+            if (weightsCount == COINS_COUNT - 1) {
+                commonWeight = entry.getKey();
+            } else if (weightsCount == 1) {
+                fakeWeight = entry.getKey();
+            }
+        }
+        return isFakeMustBeHeavier ? commonWeight < fakeWeight : commonWeight > fakeWeight;
+    }
+
+    private boolean isGeneratedCoinsCountCorrect(Map<Double, Integer> differentWeights) {
+        for (Map.Entry<Double, Integer> entry : differentWeights.entrySet()) {
+            Integer weightsCount = entry.getValue();
+            if (weightsCount != COINS_COUNT - 1 && weightsCount != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isGeneratedFakePositionCorrect(int expectedFakePos, List<Coin> generatedCoins, Map<Double, Integer> differentWeights) {
+        double fakeWeight = 0.0;
+        for (Map.Entry<Double, Integer> entry : differentWeights.entrySet()) {
+            if (entry.getValue() == 1) {
+                fakeWeight = entry.getKey();
+                break;
+            }
+        }
+        boolean fakeFound = false;
+        for (int curPos = 0; curPos < generatedCoins.size(); curPos++) {
+            if (fakeWeight == generatedCoins.get(curPos).getWeight()) {
+                fakeFound = true;
+                if (expectedFakePos != curPos) {
+                    return false;
+                }
+                break;
+            }
+        }
+        return fakeFound;
+    }
+
+    private boolean isGeneratedFakeValuesCorrect(int minValue, int maxValue, List<Coin> generatedCoins) {
+        boolean isCorrect = true;
+        int coinValue = 0;
+        for (Coin coin : generatedCoins) {
+            coinValue = coin.getValue();
+            if (coinValue < minValue || maxValue < coinValue) {
+                isCorrect = false;
+                break;
+            }
+        }
+
+        return isCorrect;
+    }
+
+    private Map<Double, Integer> getWeightsMap(List<Coin> coins) {
+        Map<Double, Integer> differentWeights = new HashMap<>();
+        double curWeight;
+        Integer count;
+        for (Coin coin : coins) {
+            curWeight = coin.getWeight();
+            count = differentWeights.get(curWeight);
+            if (count == null) {
+                differentWeights.put(coin.getWeight(), 1);
+            } else {
+                differentWeights.put(coin.getWeight(), count + 1);
+            }
+        }
+        return differentWeights;
+    }
 
     @Test
     public void getRandomIntInt() {
@@ -129,7 +206,6 @@ public class TwelveCoinsGeneratorTest {
             fail(e.getMessage());
         }
     }
-}
 
     @Test
     public void getRandomDoubleDoubleBorderValues() {
@@ -159,3 +235,78 @@ public class TwelveCoinsGeneratorTest {
             fail(e.getMessage());
         }
     }
+
+    @Test
+    public void generate() {
+        List<Coin> coins = TwelveCoinsGenerator.generate();
+
+        assertTrue(coins.size() == COINS_COUNT);
+        Map<Double, Integer> differentWeights = getWeightsMap(coins);
+        assertTrue(differentWeights.size() == DIFFERENT_WEIGHTS);
+        assertTrue(isGeneratedCoinsCountCorrect(differentWeights));
+    }
+
+    @Test
+    public void generateWithFakePosition() {
+        for (int fakePosition = 0; fakePosition < COINS_COUNT; fakePosition++) {
+
+            List<Coin> coins = TwelveCoinsGenerator.generate(fakePosition);
+
+            assertTrue(coins.size() == COINS_COUNT);
+            Map<Double, Integer> differentWeights = getWeightsMap(coins);
+            assertTrue(differentWeights.size() == DIFFERENT_WEIGHTS);
+            assertTrue(isGeneratedCoinsCountCorrect(differentWeights));
+            assertTrue(isGeneratedFakePositionCorrect(fakePosition, coins, differentWeights));
+        }
+    }
+
+    @Test
+    public void generateIsFakeHeavier() {
+        for (int callCounter = 0; callCounter < 2; callCounter++) {
+            boolean isFakeHeavier = callCounter == 0;
+
+            List<Coin> coins = TwelveCoinsGenerator.generate(isFakeHeavier);
+
+            assertTrue(coins.size() == COINS_COUNT);
+            Map<Double, Integer> differentWeights = getWeightsMap(coins);
+            assertTrue(differentWeights.size() == DIFFERENT_WEIGHTS);
+            assertTrue(isGeneratedCoinsCountCorrect(differentWeights));
+            assertTrue(isGeneratedFakeWeightCorrect(isFakeHeavier, differentWeights));
+        }
+    }
+
+    @Test
+    public void generateIsFakeHeavierAndFakePosition() {
+        for (int fakePosition = 0; fakePosition < COINS_COUNT; fakePosition++) {
+            boolean isFakeHeavier = fakePosition % 2 == 0;
+
+            List<Coin> coins = TwelveCoinsGenerator.generate(isFakeHeavier, fakePosition);
+
+            assertTrue(coins.size() == COINS_COUNT);
+            Map<Double, Integer> differentWeights = getWeightsMap(coins);
+            assertTrue(differentWeights.size() == DIFFERENT_WEIGHTS);
+            assertTrue(isGeneratedCoinsCountCorrect(differentWeights));
+            assertTrue(isGeneratedFakeWeightCorrect(isFakeHeavier, differentWeights));
+            assertTrue(isGeneratedFakePositionCorrect(fakePosition, coins, differentWeights));
+        }
+    }
+
+    @Test
+    public void generateIsFakeHeavierAndFakePositionAndMinValueAndMaxValue() {
+        for (int fakePosition = 0; fakePosition < COINS_COUNT; fakePosition++) {
+            boolean isFakeHeavier = fakePosition % 2 == 0;
+            int minValue = fakePosition + 1;
+            int maxValue = (fakePosition + 1) * 2;
+
+            List<Coin> coins = TwelveCoinsGenerator.generate(isFakeHeavier, fakePosition, minValue, maxValue);
+
+            assertTrue(coins.size() == COINS_COUNT);
+            Map<Double, Integer> differentWeights = getWeightsMap(coins);
+            assertTrue(differentWeights.size() == DIFFERENT_WEIGHTS);
+            assertTrue(isGeneratedCoinsCountCorrect(differentWeights));
+            assertTrue(isGeneratedFakeWeightCorrect(isFakeHeavier, differentWeights));
+            assertTrue(isGeneratedFakePositionCorrect(fakePosition, coins, differentWeights));
+            assertTrue(isGeneratedFakeValuesCorrect(minValue, maxValue, coins));
+        }
+    }
+}
