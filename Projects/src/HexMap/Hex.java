@@ -73,7 +73,7 @@ public class Hex {
         RIGHT, UP_RIGHT, UP_LEFT, LEFT, DOWN_LEFT, DOWN_RIGHT
     }
 
-    public static ArrayList<Hex> directions = new ArrayList<Hex>() {{
+    private final static ArrayList<Hex> directions = new ArrayList<Hex>() {{
         add(new Hex(1, 0));
         add(new Hex(1, -1));
         add(new Hex(0, -1));
@@ -94,7 +94,7 @@ public class Hex {
         UP_RIGHT, UP, UP_LEFT, DOWN_LEFT, DOWN, DOWN_RIGHT
     }
 
-    public static ArrayList<Hex> diagonals = new ArrayList<Hex>() {{
+    private final static ArrayList<Hex> diagonals = new ArrayList<Hex>() {{
         add(new Hex(2, -1));
         add(new Hex(1, -2));
         add(new Hex(-1, -1));
