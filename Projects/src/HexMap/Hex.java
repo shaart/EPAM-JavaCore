@@ -354,29 +354,93 @@ public class Hex {
      * @return Found path <br>If found path length is <b>zero</b> - <code>destination</code> Hex is <b>unreachable</b>
      */
     public static List<Hex> path(final Hex start, final Hex destination, final List<Hex> obstacles) {
-        List<Hex> path = new ArrayList<>();
-        Queue<Hex> frontier = new LinkedList<>();
-        frontier.add(start);
+        // The set of nodes already evaluated
+        Set<Hex> closedSet = new HashSet<>();
 
-        HashSet<Hex> visited = new HashSet<>();
-        visited.add(start);
+        // The set of currently discovered nodes that are not evaluated yet.
+        // Initially, only the start node is known.
+        HashSet<Hex> openSet = new HashSet<Hex>() {
+            {
+                add(start);
+            }
+        };
 
-        while (!frontier.isEmpty()) {
-            Hex current = frontier.remove();
+        // For each node, which node it can most efficiently be reached from.
+        // If a node can be reached from many nodes, cameFrom will eventually contain the
+        // most efficient previous step.
+        HashMap<Hex, Hex> cameFrom = new HashMap<>();
 
-            if (current.equals(destination)) break;
+        // For each node, the cost of getting from the start node to that node.
+        Map<Hex, Integer> gScore = new HashMap<>();
+        // The cost of going from start to start is zero.
+        gScore.put(start, 0);
 
-            for (Hex next : current.neighbors()) {
-                if (obstacles == null || !obstacles.contains(next)) {
-                    if (!visited.contains(next)) {
-                        frontier.add(next);
-                        visited.add(next);
-                    }
+        // For each node, the total cost of getting from the start node to the goal
+        // by passing by that node. That value is partly known, partly heuristic.
+        Map<Hex, Integer> fScore = new HashMap<>();
+        // For the first node, that value is completely heuristic.
+        fScore.put(start, Hex.distance(start, destination));
+
+        while (!openSet.isEmpty()) {
+            Hex current = Hex.hexWithLowestScore(openSet, fScore);
+
+            if (current.equals(destination)) {
+                return reconstructPath(cameFrom, current);
+            }
+
+            openSet.remove(current);
+            closedSet.add(current);
+
+            for (Hex neigbor : current.neighbors()) {
+                if (closedSet.contains(neigbor) || (obstacles != null && obstacles.contains(neigbor))) continue;
+
+                if (!openSet.contains(neigbor) && !closedSet.contains(neigbor)) {
+                    openSet.add(neigbor);
                 }
+
+                // The distance from start to a neighbor
+                // the "dist_between" function may vary as per the solution requirements.
+                Integer tentativeGScore = gScore.get(current) + Hex.distance(current, neigbor);
+                Integer neighborGScore = gScore.get(neigbor);
+                if (neighborGScore != null && tentativeGScore >= neighborGScore) continue;
+
+                // This path is the best until now. Record it!
+                cameFrom.put(neigbor, current);
+                gScore.put(neigbor, tentativeGScore);
+                fScore.put(neigbor, gScore.get(neigbor) + Hex.distance(neigbor, destination));
             }
         }
 
-        return path;
+        // Fail
+        return new ArrayList<>();
+    }
+
+    private static List<Hex> reconstructPath(HashMap<Hex, Hex> cameFrom, Hex current) {
+        List<Hex> totalPath = new ArrayList<>();
+        totalPath.add(current);
+
+        while (cameFrom.keySet().contains(current) && current != cameFrom.get(current)) {
+            current = cameFrom.get(current);
+            totalPath.add(0, current);
+        }
+        totalPath.remove(0); // we don't need start position
+
+        return totalPath;
+    }
+
+    private static Hex hexWithLowestScore(Set<Hex> openSet, Map<Hex, Integer> fScoresMap) {
+        Integer minScore = null;
+        Hex soughtHex = null;
+        for(Hex curHex : openSet) {
+            Integer curCore = fScoresMap.get(curHex);
+            if (curCore == null) continue;
+            if (minScore == null || curCore < minScore) {
+                minScore = curCore;
+                soughtHex = curHex;
+            }
+        }
+
+        return soughtHex;
     }
 }
 
