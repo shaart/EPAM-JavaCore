@@ -4,10 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-class RectangleTest {
+public class RectangleTest {
 
 	@Test
-	void testRectangle() {
+	public void testRectangle() {
 		Rectangle r = new Rectangle();
 		Rectangle r2 = new Rectangle(new Point(0, 0), new Point(0, 0));
 		assertTrue(r.equals(r2));
@@ -20,13 +20,13 @@ class RectangleTest {
 	}
 
 	@Test
-	void testGetLeftTop() {		
+	public void testGetLeftTop() {
 		Rectangle r = new Rectangle(new Point(0,0), new Point(5,5));
 		assertTrue(r.getLeftTop().equals(new Point(0,5)));
 	}
 	
 	@Test
-	void testGetLeftBottom() {
+	public void testGetLeftBottom() {
 		Point expected = new Point(0,0);
 		Rectangle r = new Rectangle(new Point(0,0), new Point(5,5));
 		assertTrue(expected.equals(r.getLeftBottom()));
@@ -41,7 +41,7 @@ class RectangleTest {
 	}
 
 	@Test
-	void testGetRightTop() {
+	public void testGetRightTop() {
 		Rectangle r = new Rectangle(new Point(0,0), new Point(5,5));
 		assertTrue(r.getRightTop().equals(new Point(5,5)));
 		r = new Rectangle(new Point(5,0), new Point(0,5));
@@ -49,13 +49,13 @@ class RectangleTest {
 	}
 
 	@Test
-	void testGetRightBottom() {		
+	public void testGetRightBottom() {
 		Rectangle r = new Rectangle(new Point(0,0), new Point(5,5));
 		assertTrue(r.getRightBottom().equals(new Point(5,0)));
 	}
 
 	@Test
-	void testIntersection() {
+	public void testIntersection() {
 		Rectangle r1 = new Rectangle(new Point(0, 0), new Point(5, 5));
 
 		// One in another
@@ -89,7 +89,7 @@ class RectangleTest {
 	}
 
 	@Test
-	void testSquare() {
+	public void testSquare() {
 		Rectangle r = new Rectangle();
 		assertTrue(Double.compare(r.square(), 0) == 0);
 		r = new Rectangle(new Point(0, 0), new Point(5, 5));
@@ -105,7 +105,7 @@ class RectangleTest {
 	}
 
 	@Test
-	void testSquarePointPoint() {
+	public void testSquarePointPoint() {
 		double r = 0;
 		r = Rectangle.square(new Point(0, 0), new Point(5, 5));
 		assertTrue(Double.compare(r, 25) == 0);
@@ -120,7 +120,7 @@ class RectangleTest {
 	}
 
 	@Test
-	void testSquareDoubleDoubleDoubleDouble() {
+	public void testSquareDoubleDoubleDoubleDouble() {
 		double r = 0;
 		r = Rectangle.square(0, 0, 5, 5);
 		assertTrue(Double.compare(r, 25) == 0);
@@ -135,7 +135,7 @@ class RectangleTest {
 	}
 
 	@Test
-	void testEqualsRectangle() {
+	public void testEqualsRectangle() {
 		Rectangle r = new Rectangle(new Point(0,0), new Point(5,5));
 		Rectangle r2 = new Rectangle(new Point(0,5), new Point(5,0));
 		assertTrue(r.equals(r2));

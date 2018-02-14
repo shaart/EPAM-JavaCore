@@ -2,19 +2,18 @@ package RectIntersectionSquare;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-
 import org.junit.Test;
 
-class PointTest {
+public class PointTest {
 
 	@Test
-	void testPoint() {
+	public void testPoint() {
 		Point p = new Point();
 		assertTrue(p.x == 0 && p.y == 0);
 	}
 	
 	@Test
-	void testEqualsPoint() {
+	public void testEqualsPoint() {
 		Point p1 = new Point(5, 5);
 		Point p2 = new Point(5, 5);
 		Point p3 = new Point(5, 6);
@@ -30,7 +29,7 @@ class PointTest {
 	}
 	
 	@Test
-	void testPointClone() {
+	public void testPointClone() {
 		Point p = new Point();
 		Point cloned = p.clone();
 		assertTrue(p.equals(cloned));
