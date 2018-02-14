@@ -44,14 +44,14 @@ public class Hex {
     }
 
     /**
-     * Creates default Hex with the default column (0) and the default row (0)
+     * Creates default Hex with the default column (0) and the default row (0).
      */
     public Hex() {
         this(0, 0);
     }
 
     /**
-     * Creates Hex with column (q) and row (r)<br>
+     * Creates Hex with column (q) and row (r)<br>.
      *
      * @param q Column
      * @param r Row
@@ -63,7 +63,7 @@ public class Hex {
     }
 
     /**
-     * Sums two Hexes
+     * Sums two Hexes.
      *
      * @param a Summable hex
      * @param b Summable hex
@@ -74,7 +74,7 @@ public class Hex {
     }
 
     /**
-     * Subtracts Hex B from Hex A
+     * Subtracts Hex B from Hex A.
      *
      * @param a Decreasing hex
      * @param b Subtracted hex
@@ -85,7 +85,7 @@ public class Hex {
     }
 
     /**
-     * Scales Hex (a) to coefficient (coef)
+     * Scales Hex (a) to coefficient (coef).
      *
      * @param a    Hex
      * @param coef Scale coefficient
@@ -96,7 +96,7 @@ public class Hex {
     }
 
     /**
-     * Rotates current hex to the left
+     * Rotates current hex to the left.
      *
      * @param hex Hex for rotation
      * @return rotated hex
@@ -106,7 +106,7 @@ public class Hex {
     }
 
     /**
-     * Rotates current hex to the right
+     * Rotates current hex to the right.
      *
      * @param hex Hex for rotation
      * @return rotated hex
@@ -145,7 +145,7 @@ public class Hex {
     }};
 
     /**
-     * Get neighbor hex from the direction
+     * Get neighbor hex from the direction.
      *
      * @param hex       Current hex
      * @param direction Direction to the Neighbor
@@ -156,7 +156,7 @@ public class Hex {
     }
 
     /**
-     * Get neighbor hex from the direction
+     * Get neighbor hex from the direction.
      *
      * @param hex       Current hex
      * @param direction Direction to the Neighbor
@@ -200,7 +200,7 @@ public class Hex {
     }};
 
     /**
-     * Get neighbor hex from the diagonal direction
+     * Get neighbor hex from the diagonal direction.
      *
      * @param hex       Current hex
      * @param direction Diagonal direction to the Neighbor
@@ -211,7 +211,7 @@ public class Hex {
     }
 
     /**
-     * Get neighbor hex from the diagonal direction
+     * Get neighbor hex from the diagonal direction.
      *
      * @param hex       Current hex
      * @param direction Diagonal direction to the Neighbor
@@ -222,7 +222,7 @@ public class Hex {
     }
 
     /**
-     * Distance between start and current hex
+     * Distance between start and current hex.
      *
      * @param hex Current hex
      * @return Distance in hexes
