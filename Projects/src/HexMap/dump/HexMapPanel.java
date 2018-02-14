@@ -1,6 +1,7 @@
-package HexMap;
+package HexMap.dump;
 
 import java.awt.*;
+import HexMap.Hex;
 
 import javax.swing.JPanel;
 

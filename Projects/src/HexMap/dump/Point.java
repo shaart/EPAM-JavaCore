@@ -1,4 +1,4 @@
-package HexMap;
+package HexMap.dump;
 
 public class Point {
 	public final int x;

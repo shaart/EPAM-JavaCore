@@ -1,6 +1,5 @@
-package HexMap;
+package HexMap.dump;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Collection;
@@ -8,6 +7,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.List;
+import HexMap.Hex;
 
 public class HexMap<T> {
     protected Map<Hex, T> map = new HashMap<>();

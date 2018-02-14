@@ -1,9 +1,10 @@
-package HexMap;
+package HexMap.dump;
+
+import HexMap.Hex;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
-
 
 public class DrawableHex extends Hex implements Drawable {
     public static final int SIDES_COUNT = 6;
