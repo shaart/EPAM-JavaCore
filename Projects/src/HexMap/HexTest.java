@@ -2,6 +2,9 @@ package HexMap;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class HexTest {
@@ -131,5 +134,81 @@ public class HexTest {
         assertTrue(Hex.distance(h12, h10) == 2);
         assertTrue(Hex.distance(h12, h11) == 1);
         assertTrue(Hex.distance(h12, h12) == 0);
+    }
+
+    @Test
+    public void hexAt() {
+        assertTrue(Hex.hexAt(0, 0, 1).equals(new Hex(0,0)));
+        assertTrue(Hex.hexAt(-1, -1, 1).equals(new Hex(0,-1)));
+        assertTrue(Hex.hexAt(0.75, 0.75, 1).equals(new Hex(0,1)));
+        assertTrue(Hex.hexAt(0.5, 0.5, 1).equals(new Hex(0,0)));
+        assertTrue(Hex.hexAt(-0.5, 0.75, 1).equals(new Hex(-1,1)));
+    }
+
+    @Test
+    public void line() {
+        List<Hex> line = Hex.line(h00, h11);
+        assertTrue(line.size() == 3);
+        assertTrue(line.get(0).equals(h00));
+        assertTrue(line.get(1).equals(h10));
+        assertTrue(line.get(2).equals(h11));
+
+        line = Hex.line(h00, new Hex(2, 3));
+        assertTrue(line.size() == 6);
+        assertTrue(line.get(0).equals(h00));
+        assertTrue(line.get(1).equals(new Hex(0,1)));
+        assertTrue(line.get(2).equals(new Hex(1,1)));
+        assertTrue(line.get(3).equals(new Hex(1,2)));
+        assertTrue(line.get(4).equals(new Hex(2,2)));
+        assertTrue(line.get(5).equals(new Hex(2,3)));
+    }
+
+    @Test
+    public void reachable() {
+        List<Hex> reachable = Hex.reachable(h11, null, 0);
+        assertTrue(reachable.size() == 1);
+        assertTrue(reachable.get(0).equals(h11));
+
+        List<Hex> obstacles = new ArrayList<Hex>() {{
+            add(new Hex(0,0));
+            add(new Hex(1,0));
+            add(new Hex(0,1));
+            add(new Hex(0,2));
+            add(new Hex(2,0));
+        }};
+        reachable = Hex.reachable(h11, obstacles, 2);
+        assertTrue(reachable.size() == 8);
+        assertTrue(reachable.contains(h11));
+        assertTrue(reachable.contains(new Hex(0,3)));
+        assertTrue(reachable.contains(new Hex(1,2)));
+        assertTrue(reachable.contains(new Hex(1,3)));
+        assertTrue(reachable.contains(new Hex(2,1)));
+        assertTrue(reachable.contains(new Hex(2,2)));
+        assertTrue(reachable.contains(new Hex(3,1)));
+        assertTrue(reachable.contains(new Hex(3,0)));
+
+    }
+
+    @Test
+    public void path() {
+        List<Hex> path = Hex.path(h00, h00, null);
+        assertTrue(path.size() == 0);
+
+        path = Hex.path(h00, h11, null);
+        assertTrue(path.size() == 2);
+        assertTrue(path.get(0).equals(h10));
+        assertTrue(path.get(1).equals(h11));
+
+        List<Hex> obstacles = new ArrayList<Hex>() {{
+            add(new Hex(-1,-1));
+            add(new Hex(0,-2));
+            add(new Hex(1,-3));
+        }};
+        path = Hex.path(h00, new Hex(0, -3), obstacles);
+        assertTrue(path.get(0).equals(new Hex(-1, 0)));
+        assertTrue(path.get(1).equals(new Hex(-2, 0)));
+        assertTrue(path.get(2).equals(new Hex(-2, -1)));
+        assertTrue(path.get(3).equals(new Hex(-1, -2)));
+        assertTrue(path.get(4).equals(new Hex(0, -3)));
     }
 }
