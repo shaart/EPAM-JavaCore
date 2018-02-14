@@ -1,48 +1,30 @@
 package HexMap;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JWindow;
-
-class AppWindow extends JWindow {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JFrame mainFrame;
-
-	public AppWindow() {
-		initGUI(400, 400, "HexMap");
-	}
-
-	public void showFrame() {
-		mainFrame.setVisible(true);
-	}
-
-	private void initGUI(int width, int height, String title) {
-		mainFrame = new JFrame(title);
-		mainFrame.setSize(width, height);
-
-		mainFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent windowEvent) {
-				System.exit(0);
-			}
-		});
-
-		mainFrame.setVisible(true);
-		int defaultMapWidth = 15;
-		int defaultMapHeight = 7;
-		HexMapPanel hexMap = new HexMapPanel(defaultMapWidth, defaultMapHeight);
-		mainFrame.add(hexMap);
-	}
-}
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
-	public static void main(String[] args) {
-		AppWindow window = new AppWindow();
-		window.showFrame();
-	}
+    public static void main(String[] args) {
+        List<Hex> obstacles = new ArrayList<Hex>() {{
+            add(new Hex(-1, -1));
+            add(new Hex(0, -2));
+            add(new Hex(1, -3));
+        }};
+        Hex start = new Hex(0, 0);
+        Hex destination = new Hex(0, -3);
+        List<Hex> path = Hex.path(start, destination, obstacles);
+
+        System.out.println("== Obstacles:");
+        for (Hex obstacle : obstacles) {
+            System.out.println(obstacle);
+        }
+
+        System.out.format("== Path from %s to %s:\n", start, destination);
+        int step = 1;
+        for (Hex stepHex : path) {
+            System.out.println(step++ + ". " + stepHex);
+        }
+        System.out.format("== Direct Distance between %s and %s: \n%d\n", start, destination, Hex.distance(start, destination));
+    }
 }
