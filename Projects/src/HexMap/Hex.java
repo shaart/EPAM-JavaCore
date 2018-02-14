@@ -43,6 +43,11 @@ public class Hex {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Hex(%d, %d)", q, r);
+    }
+
     /**
      * Creates default Hex with the default column (0) and the default row (0).
      */
@@ -174,7 +179,7 @@ public class Hex {
     public List<Hex> neighbors() {
         List<Hex> neighbors = new ArrayList<>();
 
-        for (HexMap.Hex direction : directions) {
+        for (Hex direction : directions) {
             neighbors.add(Hex.add(this, direction));
         }
 
@@ -326,7 +331,7 @@ public class Hex {
             reachable.add(new ArrayList<Hex>()); // initialize new step
             ArrayList<Hex> reachableAtPreviousStep = reachable.get(step - 1);
             ArrayList<Hex> reachableAtCurrentStep = reachable.get(step);
-            for (HexMap.Hex hex : reachableAtPreviousStep) {
+            for (Hex hex : reachableAtPreviousStep) {
                 for (int dir = 0; dir < Hex.directions.size(); dir++) {
                     Hex neighbor = Hex.neighbor(hex, dir);
                     if (!visited.contains(neighbor) && (obstacles == null || !obstacles.contains(neighbor))) {
@@ -362,7 +367,7 @@ public class Hex {
             if (current.equals(destination)) break;
 
             for (Hex next : current.neighbors()) {
-                if (!obstacles.contains(next)) {
+                if (obstacles == null || !obstacles.contains(next)) {
                     if (!visited.contains(next)) {
                         frontier.add(next);
                         visited.add(next);
