@@ -1,6 +1,6 @@
 package HexMap;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Hex in cube coordinates <code>q, r, s</code>
@@ -167,6 +167,21 @@ public class Hex {
     }
 
     /**
+     * Get all close neighbors
+     *
+     * @return List of neighbors
+     */
+    public List<Hex> neighbors() {
+        List<Hex> neighbors = new ArrayList<>();
+
+        for (HexMap.Hex direction : directions) {
+            neighbors.add(Hex.add(this, direction));
+        }
+
+        return neighbors;
+    }
+
+    /**
      * Counterclockwise diagonal directions
      * <pre>
      *       [ ]   <b>[1]</b>   [ ]
@@ -240,5 +255,223 @@ public class Hex {
      */
     public static int distance(Hex a, Hex b) {
         return Hex.distanceFromStart(Hex.subtract(a, b));
+    }
+
+    /**
+     * Gets Hex by pixel coordinates (x, y) and size of hex.
+     * By default Hex is pointy top
+     *
+     * @param x       X coordinate
+     * @param y       Y coordinate
+     * @param hexSize Size of hex's side
+     * @return Hex at these coordinates
+     */
+    public static Hex hexAt(double x, double y, int hexSize) {
+        return hexAt(x, y, hexSize, false);
+    }
+
+    /**
+     * Gets Hex by pixel coordinates (x, y) and size of hex.
+     *
+     * @param x         X coordinate
+     * @param y         Y coordinate
+     * @param hexSize   Size of hex's side
+     * @param isFlatTop Type of hex: <b>flat top</b> or <b>pointy top</b>
+     * @return Hex at these coordinates
+     */
+    public static Hex hexAt(double x, double y, int hexSize, boolean isFlatTop) {
+        double q;
+        double r;
+        if (isFlatTop) {
+            q = x * 2 / 3 / hexSize;
+            r = (-x / 3 + Math.sqrt(3) / 3 * y) / hexSize;
+        } else {
+            q = x * Math.sqrt(3) / 3 - y / 3 / hexSize;
+            r = y * 2 / 3 / hexSize;
+        }
+        return (new FractionalHex(q, r)).toHex();
+    }
+
+    /**
+     * Make line from <b>start</b> to <b>end</b>.
+     *
+     * @param start Line's start Hex
+     * @param end   Line's end Hex
+     * @return List of Hexes forming the line
+     */
+    public static List<Hex> line(final Hex start, final Hex end) {
+        return FractionalHex.hexLine(start, end);
+    }
+
+    /**
+     * Forms list of Hexes reachable by <b>steps</b> from <b>start</b> Hex considering <b>obstacles</b>.
+     *
+     * @param start     Start Hex
+     * @param obstacles List of impassable Hexes
+     * @param steps     Steps from <b>start</b> Hex
+     * @return List of reachable Hexes by <b>steps</b> from <b>hex</b>
+     */
+    public static List<Hex> reachable(final Hex start, final List<Hex> obstacles, final int steps) {
+        List<Hex> visited = new ArrayList<>();
+        visited.add(start);
+
+        ArrayList<ArrayList<Hex>> reachable = new ArrayList<>();
+        reachable.add(new ArrayList<Hex>() {
+            {
+                add(start);
+            }
+        });
+
+        for (int step = 1; step <= steps; step++) {
+            reachable.add(new ArrayList<Hex>()); // initialize new step
+            ArrayList<Hex> reachableAtPreviousStep = reachable.get(step - 1);
+            ArrayList<Hex> reachableAtCurrentStep = reachable.get(step);
+            for (HexMap.Hex hex : reachableAtPreviousStep) {
+                for (int dir = 0; dir < Hex.directions.size(); dir++) {
+                    Hex neighbor = Hex.neighbor(hex, dir);
+                    if (!visited.contains(neighbor) && (obstacles == null || !obstacles.contains(neighbor))) {
+                        visited.add(neighbor);
+                        reachableAtCurrentStep.add(neighbor);
+                    }
+                }
+            }
+        }
+
+        return visited;
+    }
+
+    /**
+     * Building path between <code>start</code> Hex and <code>destination</code> Hex considering <code>obstacles</code>.
+     *
+     * @param start       Start Hex
+     * @param destination Destination Hex
+     * @param obstacles   List of impassable Hexes
+     * @return Found path <br>If found path length is <b>zero</b> - <code>destination</code> Hex is <b>unreachable</b>
+     */
+    public static List<Hex> path(final Hex start, final Hex destination, final List<Hex> obstacles) {
+        List<Hex> path = new ArrayList<>();
+        Queue<Hex> frontier = new LinkedList<>();
+        frontier.add(start);
+
+        HashSet<Hex> visited = new HashSet<>();
+        visited.add(start);
+
+        while (!frontier.isEmpty()) {
+            Hex current = frontier.remove();
+
+            if (current.equals(destination)) break;
+
+            for (Hex next : current.neighbors()) {
+                if (!obstacles.contains(next)) {
+                    if (!visited.contains(next)) {
+                        frontier.add(next);
+                        visited.add(next);
+                    }
+                }
+            }
+        }
+
+        return path;
+    }
+}
+
+/**
+ * Auxiliary class for calculations and algorithms<br>
+ * Hex with <code>double</code> coordinates
+ */
+class FractionalHex {
+    public final double q;
+    public final double r;
+    public final double s;
+
+    public FractionalHex(double q, double r) {
+        this.q = q;
+        this.r = r;
+        this.s = -q - r;
+    }
+
+    /**
+     * Calculates linear interpolated value between <b>start</b> and <b>end</b> using coefficient <b>t</b>.
+     *
+     * @param start Start value
+     * @param end   End value
+     * @param t     Interpolation coefficient. 0 &le; t &le; 1
+     * @return Interpolated value
+     */
+    private static double linearInterpolation(double start, double end, double t) {
+        if (t < 0) return start;
+        if (t > 1) return end;
+
+        return start + t * (end - start);
+    }
+
+    /**
+     * Calculates linear interpolated fractional hex.
+     *
+     * @param start Start Hex
+     * @param end   End Hex
+     * @param t     Interpolation coefficient. 0 &le; t &le; 1
+     * @return Interpolated Fractional Hex
+     */
+    public static FractionalHex linearInterpolation(FractionalHex start, FractionalHex end, double t) {
+        double tq = linearInterpolation(start.q, end.q, t);
+        double rq = linearInterpolation(start.r, end.r, t);
+
+        return new FractionalHex(tq, rq);
+    }
+
+    /**
+     * Make line from Hex <b>start</b> to Hex <b>end</b>.
+     *
+     * @param start Start of line
+     * @param end   End of line
+     * @return List of Hexes forming the line
+     */
+    public static List<Hex> hexLine(final Hex start, final Hex end) {
+        List<Hex> line = new ArrayList<>();
+
+        FractionalHex startFract = new FractionalHex(start.q, start.r);
+        FractionalHex endFract = new FractionalHex(end.q, end.r);
+
+        int distance = Hex.distance(start, end); // steps count
+        double step = 1.0 / Math.max(distance, 1); // step length
+        for (int i = 0; i <= distance; i++) {
+            line.add(FractionalHex.linearInterpolation(startFract, endFract, step * i).toHex());
+        }
+
+        return line;
+    }
+
+    /**
+     * Rounds fractional hex's coordinates and returns Hex.
+     *
+     * @return Rounded Hex
+     */
+    public Hex toHex() {
+        return FractionalHex.hexRound(this);
+    }
+
+    /**
+     * Rounds fractional hex's coordinates and returns Hex.
+     *
+     * @param h Fractional Hex for round
+     * @return Rounded Hex
+     */
+    public static Hex hexRound(FractionalHex h) {
+        int q = (int) (Math.round(h.q));
+        int r = (int) (Math.round(h.r));
+        int s = (int) (Math.round(h.s));
+        double dq = Math.abs(q - h.q);
+        double dr = Math.abs(r - h.r);
+        double ds = Math.abs(s - h.s);
+        // Save hex's state: q + r + s = 0
+        // Reset coordinate with largest change
+        if (dq > dr && dq > ds) {
+            q = -r - s;
+        } else if (dr > ds) {
+            r = -q - s;
+        }
+
+        return new Hex(q, r);
     }
 }
