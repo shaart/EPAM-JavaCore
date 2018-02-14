@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class HexTest {
     final Hex hDefault = new Hex();
     final Hex h00 = new Hex(0, 0);
+    final Hex h01 = new Hex(0, 1);
     final Hex h10 = new Hex(1, 0);
     final Hex h11 = new Hex(1, 1);
     final Hex h12 = new Hex(1, 2);
@@ -196,7 +197,7 @@ public class HexTest {
 
         path = Hex.path(h00, h11, null);
         assertTrue(path.size() == 2);
-        assertTrue(path.get(0).equals(h10));
+        assertTrue(path.get(0).equals(h01));
         assertTrue(path.get(1).equals(h11));
 
         List<Hex> obstacles = new ArrayList<Hex>() {{
