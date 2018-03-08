@@ -6,6 +6,20 @@ package JavaErrors.JavaStackOverflowError;
  */
 public class RecursiveMethods {
     public static void main(String[] args) {
-        throw new UnsupportedOperationException();
+        try {
+            recursive();
+        } catch (Exception | Error e) {
+            System.out.println("Catch: " + e.getClass());
+            if (e instanceof StackOverflowError) {
+                StackOverflowError soe = (StackOverflowError) e;
+                StackTraceElement[] stackTraceElements = soe.getStackTrace();
+                System.out.println("Cause: " + stackTraceElements[0]);
+                System.out.println("Stack trace length: " + stackTraceElements.length);
+            }
+        }
+    }
+
+    private static void recursive() {
+        recursive();
     }
 }
