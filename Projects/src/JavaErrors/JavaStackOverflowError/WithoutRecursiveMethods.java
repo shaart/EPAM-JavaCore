@@ -17,7 +17,7 @@ public class WithoutRecursiveMethods {
 
         try {
             // Two classes with "has-a" relation to each other
-            twoClassesEachContainsAnother();
+            cycleCreating();
         } catch (Exception | Error e) {
             showError(e);
         } finally {
@@ -61,23 +61,23 @@ public class WithoutRecursiveMethods {
 
     // ----------------------------------------------------------------
     private static class Son {
-        private Daddy daddy;
+        private Dad dad;
 
         Son() {
-            daddy = new Daddy();
+            dad = new Dad();
         }
     }
 
-    private static class Daddy {
+    private static class Dad {
         private Son son;
 
-        Daddy() {
+        Dad() {
             son = new Son();
         }
     }
 
-    private static void twoClassesEachContainsAnother() {
-        Daddy daddy = new Daddy();
+    private static void cycleCreating() {
+        Dad dad = new Dad();
     }
 
     // ----------------------------------------------------------------
