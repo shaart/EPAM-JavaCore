@@ -1,4 +1,4 @@
-package JavaErrors.JavaOutOfMemoryError;
+package JavaErrors.JavaOutOfMemoryError.HeapSpace;
 
 import java.math.BigInteger;
 
@@ -7,7 +7,7 @@ import java.math.BigInteger;
  * Create big objects continuously and make them stay in memory.
  * Do not use arrays or collections.
  */
-public class HeapSpaceBigObjectsStayInMemory {
+public class CreatingBigObjects {
     public static void main(String[] args) {
         try {
             String curArg = args.length > 0 ? args[0] : "";
