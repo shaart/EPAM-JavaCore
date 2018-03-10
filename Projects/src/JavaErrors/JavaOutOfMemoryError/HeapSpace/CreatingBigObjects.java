@@ -55,7 +55,7 @@ public class CreatingBigObjects {
             current = current.next;
             counter++;
             if (counter % 1_000_000_000L == 0) {
-                System.out.println(counter + " " + (counter * 8) + " bytes");
+                System.out.println(counter);
             }
         }
 
@@ -73,10 +73,10 @@ public class CreatingBigObjects {
         private long bigField = 9000L;
         private static final String BIG_VALUE = "99999999999999999999999" +
                 "999999999999999999999999999999999999999999999999";
-        private static BigInteger currectValue = new BigInteger(BIG_VALUE);
+        private static BigInteger currentValue = new BigInteger(BIG_VALUE);
 
         private BigInteger bigInteger = new BigInteger(
-                (currectValue = currectValue.add(BigInteger.ONE)).toString()
+                (currentValue = currentValue.add(BigInteger.ONE)).toString()
         ) {
             @Override
             public void finalize() {
