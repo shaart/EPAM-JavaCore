@@ -4,11 +4,11 @@ package JavaErrors.JavaStackOverflowError;
  * [Task 5] java.lang.StackOverflowError: Do not use recursive methods.
  * Don't tune stack size.
  */
-public class WithoutRecursiveMethods {
+public class WithoutRecursion {
     public static void main(String[] args) {
         try {
             // But this is implicit recursion
-            overriddenToString();
+            toStringWithThis();
         } catch (Exception | Error e) {
             showError(e);
         } finally {
@@ -46,7 +46,7 @@ public class WithoutRecursiveMethods {
     }
 
     // ----------------------------------------------------------------
-    private static class OverriddenToString {
+    private static class ToStringWithThis {
         private String value;
 
         @Override
@@ -55,8 +55,8 @@ public class WithoutRecursiveMethods {
         }
     }
 
-    private static void overriddenToString() {
-        System.out.println(new OverriddenToString());
+    private static void toStringWithThis() {
+        System.out.println(new ToStringWithThis());
     }
 
     // ----------------------------------------------------------------
