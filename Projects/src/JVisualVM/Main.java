@@ -1,4 +1,4 @@
-package JavaErrors.JVisualVM;
+package JVisualVM;
 
 import java.util.ArrayList;
 import java.util.List;
