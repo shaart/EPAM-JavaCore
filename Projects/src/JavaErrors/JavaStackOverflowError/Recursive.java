@@ -1,13 +1,13 @@
 package JavaErrors.JavaStackOverflowError;
 
 /**
- * [Task 4] java.lang.StackOverflowError: Use recursive methods.
+ * [Task 4] java.lang.StackOverflowError: Use recursion methods.
  * Don't tune stack size.
  */
-public class RecursiveMethods {
+public class Recursive {
     public static void main(String[] args) {
         try {
-            recursive();
+            recursion();
         } catch (Exception | Error e) {
             System.out.println("Catch: " + e.getClass());
             if (e instanceof StackOverflowError) {
@@ -19,7 +19,7 @@ public class RecursiveMethods {
         }
     }
 
-    private static void recursive() {
-        recursive();
+    private static void recursion() {
+        recursion();
     }
 }
