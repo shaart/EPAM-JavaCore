@@ -1,4 +1,4 @@
-package AdditionalTasks.Task4;
+package shaart.Task4;
 
 /**
  * Task 4
