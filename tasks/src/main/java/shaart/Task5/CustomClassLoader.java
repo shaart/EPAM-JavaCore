@@ -11,6 +11,9 @@ import java.util.HashMap;
 public class CustomClassLoader extends ClassLoader {
 
   private static CustomClassLoader instance;
+  /**
+   * Cache with loaded classes
+   */
   private static HashMap<String, Class> classesCache = new HashMap<>();
 
   private CustomClassLoader() {
@@ -57,6 +60,10 @@ public class CustomClassLoader extends ClassLoader {
         .getResourceAsStream(className.replace(".", "/") + ".class");
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream()
     ) {
+      if (is == null) {
+        return null;
+      }
+
       int dataByte;
       try {
         while ((dataByte = is.read()) != -1) {
@@ -72,5 +79,4 @@ public class CustomClassLoader extends ClassLoader {
       return null;
     }
   }
-
 }

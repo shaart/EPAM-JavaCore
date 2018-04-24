@@ -34,6 +34,7 @@ public class UserInterface {
     boolean working = true;
     System.out.println(menu);
     while (working) {
+      System.out.print("> ");
       userInput = scanner.nextLine();
       try {
         userOption = Integer.parseInt(userInput);
