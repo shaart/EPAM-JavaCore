@@ -1,14 +1,17 @@
 package shaart.Task6;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class Dog implements Animal {
 
   @Override
-  public String play() {
-    return "The dog is playing";
+  public void play() {
+    log.info("The dog is playing");
   }
 
   @Override
-  public String voice() {
-    return "The dog barks";
+  public void voice() {
+    log.info("The dog barks");
   }
 }

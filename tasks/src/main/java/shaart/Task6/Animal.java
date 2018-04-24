@@ -2,7 +2,7 @@ package shaart.Task6;
 
 public interface Animal {
 
-  String play();
+  void play();
 
-  String voice();
+  void voice();
 }

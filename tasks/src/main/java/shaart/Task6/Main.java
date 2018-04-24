@@ -25,8 +25,8 @@ public class Main {
       log.error(e);
     }
     for (Animal animal : animals) {
-      log.info(animal.play());
-      log.info(animal.voice());
+      animal.play();
+      animal.voice();
     }
   }
 }
