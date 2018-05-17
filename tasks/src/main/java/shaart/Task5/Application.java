@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
  * Implement the output via log4j library. <br>
  */
 @Log4j
-public class UserInterface {
+public class Application {
 
   enum Menu {AddNewClass, UpdateExistingClass, InvokeClassMethods, Exit}
 
@@ -24,7 +24,7 @@ public class UserInterface {
 
     String userInput;
     int userOption;
-    String menu = "Menu\n" +
+    final String menu = "Menu\n" +
         "---------\n" +
         Menu.AddNewClass.ordinal() + ". Add new class\n" +
         Menu.UpdateExistingClass.ordinal() + ". Update existing class\n" +
@@ -33,6 +33,7 @@ public class UserInterface {
         Menu.Exit.ordinal() + ". Exit\n";
     boolean working = true;
     System.out.println(menu);
+
     while (working) {
       System.out.print("> ");
       userInput = scanner.nextLine();
@@ -42,6 +43,7 @@ public class UserInterface {
         System.err.println("Incorrect input");
         continue;
       }
+
       switch (menuValues[userOption]) {
         case AddNewClass:
           loadClassInterface();
@@ -70,10 +72,9 @@ public class UserInterface {
     System.out.print("Input class name: ");
     String userInput = scanner.nextLine();
     try {
-      customClassLoader.loadClass(userInput);
-      System.out.println("Class " + userInput + " successfully loaded");
+      customClassLoader.findClass(userInput);
+      log.info("Class " + userInput + " successfully loaded");
     } catch (ClassNotFoundException e) {
-      System.err.println(e.getMessage());
       log.error(e);
     }
   }
