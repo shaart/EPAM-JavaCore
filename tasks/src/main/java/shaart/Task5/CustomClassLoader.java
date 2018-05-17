@@ -1,9 +1,11 @@
 package shaart.Task5;
 
+import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import lombok.extern.log4j.Log4j;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
@@ -15,12 +17,34 @@ public class CustomClassLoader extends ClassLoader {
    * Cache with loaded classes
    */
   private static HashMap<String, Class> classesCache = new HashMap<>();
+  private String pathToFolder;
 
   private CustomClassLoader() {
+    super();
+    this.pathToFolder = getClass().getProtectionDomain().getCodeSource().getLocation().toString();
+  }
+
+  public CustomClassLoader(String pathToFolder, ClassLoader parent) {
+    super(parent);
+    this.pathToFolder = pathToFolder;
   }
 
   public CustomClassLoader(ClassLoader parent) {
     super(parent);
+  }
+
+  public <T> T getClassInstance(String name) {
+    try {
+      if (classesCache.containsKey(name)) {
+        return (T) classesCache.get(name).newInstance();
+      } else {
+        Class<?> foundClass = findClass(name);
+        return foundClass == null ? null : (T) foundClass.newInstance();
+      }
+    } catch (Exception e) {
+      log.error(e);
+      return null;
+    }
   }
 
   public static synchronized CustomClassLoader getInstance() {
@@ -30,53 +54,66 @@ public class CustomClassLoader extends ClassLoader {
     return instance;
   }
 
+  /**
+   * Gets class from cache or file system
+   *
+   * @param className Path to <code>class</code> file without extension
+   * @return Loaded class
+   */
   @Override
-  public Class<?> findClass(String name) throws ClassNotFoundException {
-    if (classesCache.containsKey(name)) {
-      return classesCache.get(name);
+  public Class<?> findClass(String className) throws ClassNotFoundException {
+    if (classesCache.containsKey(className)) {
+      return classesCache.get(className);
     }
 
-    byte[] bt = loadClassData(name);
-    if (bt == null) {
-      throw new ClassNotFoundException("Class " + name + " not found");
+    Path classFilePath = Paths.get(pathToFolder)
+        .resolve(Paths.get(className.replace(".", "/") + ".class"))
+        .normalize()
+        .toAbsolutePath();
+
+    byte[] bt = loadClassData(classFilePath.toString());
+    if (bt == null || bt.length == 0) {
+      throw new ClassNotFoundException("Class " + className + " not found");
     }
 
-    Class<?> loadedClass = defineClass(name, bt, 0, bt.length);
+    Class<?> loadedClass = defineClass(className, bt, 0, bt.length);
     classesCache.put(loadedClass.getName(), loadedClass);
     log.info("Class " + loadedClass.getName() + " added to cache");
-    System.out.println("Class " + loadedClass.getName() + " added to cache");
 
     return loadedClass;
   }
 
+  /**
+   * Loads class from file system
+   *
+   * @param name Path to <code>class</code> file without extension
+   * @return Loaded class
+   */
   @Override
   public Class<?> loadClass(String name) throws ClassNotFoundException {
     return super.loadClass(name);
   }
 
-  private byte[] loadClassData(String className) {
-    try (InputStream is = getClass()
-        .getClassLoader()
-        .getResourceAsStream(className.replace(".", "/") + ".class");
+  /**
+   * Loads class data from file
+   *
+   * @param classFileFullPath Full path to <code>class</code> file
+   * @return Read class data
+   */
+  private byte[] loadClassData(String classFileFullPath) {
+    try (InputStream is = new FileInputStream(classFileFullPath);
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream()
     ) {
-      if (is == null) {
-        return null;
-      }
-
       int dataByte;
-      try {
-        while ((dataByte = is.read()) != -1) {
-          byteStream.write(dataByte);
-        }
-      } catch (IOException e) {
-        log.error(e);
+
+      while ((dataByte = is.read()) != -1) {
+        byteStream.write(dataByte);
       }
 
       return byteStream.toByteArray();
     } catch (Exception e) {
       log.error("Can't load class data", e);
-      return null;
+      return new byte[0];
     }
   }
 }
