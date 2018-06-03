@@ -13,7 +13,7 @@ import java.util.HashMap;
 @Log4j
 public class RunnableClassLoader extends ClassLoader {
 
-  private static final String classesFolderName = "classes";
+  private static final String CLASSES_FOLDER_NAME = "classes";
   private static final String CLASS_NOT_FOUND_FORMAT = "Class %s not found";
   private static final String CLASS_NOT_FOUND_BY_LOADER_CALL_PARENT =
       "Class %s not found by loader %s. Calling default class loader..";
@@ -32,7 +32,7 @@ public class RunnableClassLoader extends ClassLoader {
 
   private RunnableClassLoader() {
     super();
-    this.pathToFolder = Paths.get(classesFolderName).toAbsolutePath().toString();
+    this.pathToFolder = Paths.get(CLASSES_FOLDER_NAME).toAbsolutePath().toString();
   }
 
   public RunnableClassLoader(String pathToFolder, ClassLoader parent) {
@@ -42,21 +42,6 @@ public class RunnableClassLoader extends ClassLoader {
 
   public RunnableClassLoader(ClassLoader parent) {
     super(parent);
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> T getClassInstance(String name) {
-    try {
-      if (classesCache.containsKey(name)) {
-        return (T) classesCache.get(name).newInstance();
-      } else {
-        Class<?> foundClass = findClass(name);
-        return foundClass == null ? null : (T) foundClass.newInstance();
-      }
-    } catch (Exception e) {
-      log.error(e);
-      return null;
-    }
   }
 
   public static synchronized RunnableClassLoader getInstance() {
