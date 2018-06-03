@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: log4j-1.2.17.jar
-Main-Class: shaart.Task5.Application
+Main-Class: shaart.task5.Application
 

@@ -1,4 +1,4 @@
-package shaart.Task5;
+package shaart.task5;
 
 import org.junit.jupiter.api.Test;
 

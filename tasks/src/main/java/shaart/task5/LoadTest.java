@@ -1,4 +1,4 @@
-package shaart.Task5;
+package shaart.task5;
 
 public class LoadTest implements Runnable {
 
