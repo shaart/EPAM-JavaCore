@@ -1,5 +1,7 @@
 package shaart.Task5;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import lombok.extern.log4j.Log4j;
 
@@ -14,10 +16,11 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class Application {
 
-  enum Menu {AddNewClass, UpdateExistingClass, InvokeClassMethods, Exit}
+  enum Menu {ADD_OR_UPDATE_CLASS, INVOKE_CLASS_METHOD, EXIT}
 
-  private static Scanner scanner = new Scanner(System.in);
-  private static CustomClassLoader customClassLoader = CustomClassLoader.getInstance();
+  private static final Scanner scanner = new Scanner(System.in);
+  private static final ClassLoader customClassLoader = RunnableClassLoader.getInstance();
+  private static final Map<String, Class> classes = new HashMap<>();
 
   public static void main(String[] args) {
     Menu[] menuValues = Menu.values();
@@ -26,60 +29,73 @@ public class Application {
     int userOption;
     final String menu = "Menu\n" +
         "---------\n" +
-        Menu.AddNewClass.ordinal() + ". Add new class\n" +
-        Menu.UpdateExistingClass.ordinal() + ". Update existing class\n" +
-        Menu.InvokeClassMethods.ordinal() + ". Invoke class methods\n" +
+        Menu.ADD_OR_UPDATE_CLASS.ordinal() + ". Add/Update class\n" +
+        Menu.INVOKE_CLASS_METHOD.ordinal() + ". Invoke class methods\n" +
         "---------\n" +
-        Menu.Exit.ordinal() + ". Exit\n";
+        Menu.EXIT.ordinal() + ". Exit\n";
     boolean working = true;
-    System.out.println(menu);
+    log.info(menu);
 
     while (working) {
-      System.out.print("> ");
+      log.info("Enter menu option:");
       userInput = scanner.nextLine();
+      log.debug("Got option: " + userInput);
       try {
         userOption = Integer.parseInt(userInput);
       } catch (NumberFormatException e) {
-        System.err.println("Incorrect input");
+        log.error("Incorrect input");
         continue;
       }
 
       switch (menuValues[userOption]) {
-        case AddNewClass:
+        case ADD_OR_UPDATE_CLASS:
           loadClassInterface();
           break;
-        case UpdateExistingClass:
-          updateClassInterface();
-          break;
-        case InvokeClassMethods:
+        case INVOKE_CLASS_METHOD:
           invokeClassMethodsInterface();
           break;
-        case Exit:
+        case EXIT:
           working = false;
           break;
         default:
-          System.err.println("Unknown menu option");
+          log.info("Unknown menu option");
           break;
       }
     }
   }
 
   private static void invokeClassMethodsInterface() {
-
-  }
-
-  private static void loadClassInterface() {
-    System.out.print("Input class name: ");
+    log.info("Input class name: ");
     String userInput = scanner.nextLine();
+    log.info("Got input: " + userInput);
     try {
-      customClassLoader.findClass(userInput);
-      log.info("Class " + userInput + " successfully loaded");
-    } catch (ClassNotFoundException e) {
+      log.info("Getting specified class...");
+      Class<?> loadClass = classes.get(userInput);
+      if (loadClass == null) {
+        log.info("Class not loaded.");
+        return;
+      }
+      log.info("Creating instance of specified class...");
+      Runnable instance = (Runnable) loadClass.newInstance();
+      log.info("Calling instance's run()...");
+      instance.run();
+    } catch (InstantiationException | IllegalAccessException e) {
       log.error(e);
     }
   }
 
-  private static void updateClassInterface() {
-
+  private static void loadClassInterface() {
+    log.info("Input class name: ");
+    String userInput = scanner.nextLine();
+    log.info("Got input: " + userInput);
+    try {
+      Class<?> loadClass = customClassLoader.loadClass(userInput);
+      classes.put(loadClass.getName(), loadClass);
+      log.trace(loadClass.getCanonicalName() + " added to classes map with name "
+          + loadClass.getName());
+      log.info("Class " + userInput + " successfully loaded");
+    } catch (ClassNotFoundException e) {
+      log.error(e);
+    }
   }
 }

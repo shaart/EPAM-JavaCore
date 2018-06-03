@@ -80,7 +80,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>shaart.Task5.CustomClassLoader</mainClass>
+              <mainClass>shaart.Task5.Application</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
