@@ -1,4 +1,4 @@
-package shaart.Task4;
+package shaart.task4;
 
 /**
  * Task 4

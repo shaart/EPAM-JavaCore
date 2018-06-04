@@ -1,4 +1,4 @@
-package shaart.Task6;
+package shaart.task6;
 
 public interface Animal {
 

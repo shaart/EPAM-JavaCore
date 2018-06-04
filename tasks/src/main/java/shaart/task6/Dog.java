@@ -1,4 +1,4 @@
-package shaart.Task6;
+package shaart.task6;
 
 import lombok.extern.log4j.Log4j;
 

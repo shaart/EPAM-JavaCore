@@ -1,4 +1,4 @@
-package shaart.Task6;
+package shaart.task6;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ public class Main {
     CustomClassLoader customClassLoader = CustomClassLoader.getInstance();
     List<Animal> animals = new ArrayList<>();
     try {
-      animals.add((Animal) customClassLoader.findClass("shaart.Task6.Cat").newInstance());
-      animals.add((Animal) customClassLoader.findClass("shaart.Task6.Dog").newInstance());
+      animals.add((Animal) customClassLoader.findClass("shaart.task6.Cat").newInstance());
+      animals.add((Animal) customClassLoader.findClass("shaart.task6.Dog").newInstance());
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
       log.error(e);
     }
