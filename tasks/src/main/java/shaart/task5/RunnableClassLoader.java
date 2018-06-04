@@ -1,5 +1,6 @@
 package shaart.task5;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -66,7 +67,7 @@ public class RunnableClassLoader extends ClassLoader {
     }
 
     Path classFilePath = Paths.get(pathToFolder)
-        .resolve(Paths.get(className.replace(".", "/") + ".class"))
+        .resolve(Paths.get(className.replace('.', File.separatorChar) + ".class"))
         .normalize()
         .toAbsolutePath();
 
