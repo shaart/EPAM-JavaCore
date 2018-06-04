@@ -1,3 +1,8 @@
+## How to use
+Near program must be directory `classes`. You must put your class to `classes` using full path of your package (for example, `com.example.MyClass` must be have path like this: `{program_root}/classes/com/example/MyClass.class`).
+
+All added by program's interface classes will be packaged to `func.jar`.
+
 ## Task 5 Classloading 
 1. Create a console application with possibility of dynamic loading/updating development functionality.
 2. Implement a custom classloader with a class-caching mechanism. 
