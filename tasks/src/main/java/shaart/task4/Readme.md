@@ -11,35 +11,35 @@ Create simple java application (for example text file parsing or something else)
   <summary>
     Objects generation: a lot of <code>Long</code> and <code>Integer</code> objects
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/1.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/1.png">
 </details>
 <details>
   <summary>
     Objects reachability: a lot of unreachable <code>Long</code> and <code>Integer</code> objects
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/2.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/2.png">
 </details>
 <details>
   <summary>
     Classes and Allocation by Call Tree: <code>Integer</code> objects from <code>LeakedAdded.addInt(int)</code>
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/3.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/3.png">
 </details>
 <details>
   <summary>
     Classes and Allocation by Call Tree: <code>Long</code> objects without allocation information
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/4.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/4.png">
 </details>
 <details>
   <summary>
     Garbage Objects: big amount of <code>Long</code> was created at <code>LeakedAdded</code> by <code>Long.valueOf()</code>
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/5.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/5.png">
 </details>
 <details>
   <summary>
     Garbage Objects: big amount of <code>Integer</code> was created at <code>LeakedAdded</code> by <code>Integer.valueOf()</code>
   </summary>
-  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/Projects/src/tasks/task4/screenshots/6.png">
+  <img src="https://github.com/shaart/EPAM-JavaCore/blob/master/tasks/src/main/java/shaart/task4/screenshots/6.png">
 </details>
